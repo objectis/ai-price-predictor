@@ -8,7 +8,7 @@ prices = []
 
 
 
-def getdata(filename):
+def get_data(filename):
 	with open(filename,'r') as csvfile:
 		csvFileReader = csv.reader(csvfile)
 		next(csvFileReader)
@@ -19,7 +19,7 @@ def getdata(filename):
 	#print(prices)
 	return
 
-def showplot(dates,prices)
+def show_plot(dates,prices):
 	linear_mod = linear_model.LinearRegression()
 	dates = np.reshape(dates, (len(dates),1))
 	prices = np.reshape(prices, (len(prices),1))
@@ -28,3 +28,18 @@ def showplot(dates,prices)
 	plt.plot(dates,linear_mod.predict(dates),color='blue',linewidth=3)
 	plt.show()
 	return
+
+def predict_price(dates,prices,x):
+	linear_mod = linear_model.LinearRegression()
+	dates = np.reshape(dates, (len(dates),1))
+	prices = np.reshape(prices, (len(prices),1))
+	linear_mod.fit(dates,prices)
+	predicted_price = linear_mod.predict(x)
+	return predicted_price[0][0],linear_mod.coef_[0][0], linear_mod.intercept_[0]
+
+
+get_data('TSLA.csv')
+print(prices)
+print(dates)
+
+show_plot(dates,prices)
